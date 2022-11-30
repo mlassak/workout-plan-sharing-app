@@ -16,6 +16,9 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
 						<Button component={Link} to="/">
 							Home
 						</Button>
+						<Button component={Link} to="/plans">
+							Browse
+						</Button>
 						<Box sx={{ flexGrow: 1 }} />
 						{!user ? (
 							<Button component={Link} to="/login">

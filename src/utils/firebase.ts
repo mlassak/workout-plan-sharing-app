@@ -7,7 +7,15 @@ import {
 	onAuthStateChanged,
 	User
 } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import {
+	collection,
+	CollectionReference,
+	doc,
+	DocumentReference,
+	getFirestore
+} from 'firebase/firestore';
+
+import { WorkoutPlan } from '../types';
 
 import { firebaseConfig } from './firebase-config';
 
@@ -33,4 +41,13 @@ export const onAuthChanged = (callback: (u: User | null) => void) =>
 	onAuthStateChanged(auth, callback);
 
 // Firestore
-const _ = getFirestore(); // db not used yet
+const db = getFirestore();
+
+export const workoutPlanCollection = collection(
+	db,
+	'workoutPlans'
+) as CollectionReference<WorkoutPlan>;
+
+export const workoutPlanDocument = (id: string) => {
+	doc(db, 'workoutPlans', id) as DocumentReference<WorkoutPlan>;
+};
