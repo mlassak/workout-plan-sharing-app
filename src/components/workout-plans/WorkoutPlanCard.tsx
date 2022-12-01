@@ -13,7 +13,7 @@ import useLoggedInUser from '../../hooks/useLoggedInUser';
 import { WorkoutPlanMetadata } from '../../types';
 
 const WorkoutPlanCard: FC<WorkoutPlanMetadata> = ({
-	title,
+	name,
 	author,
 	difficulty,
 	workoutsPerWeek,
@@ -28,21 +28,22 @@ const WorkoutPlanCard: FC<WorkoutPlanMetadata> = ({
 				flexDirection: 'column',
 				justifyContent: 'space-between',
 				width: '100%',
-				textAlign: 'left'
+				textAlign: 'left',
+				marginTop: '0.5rem'
 			}}
 		>
 			<CardContent>
 				<Typography variant="h5" color="textSecondary">
-					{title}
+					{name}
 				</Typography>
 				<Box>
 					<Typography>Author: {author}</Typography>
 					<Typography>Diffculty level: {difficulty}</Typography>
 					<Typography>Workouts per week: {workoutsPerWeek}</Typography>
 					<Typography>{`Plan length: ${
-						planLength !== 'Unspecified'
-							? `${planLength.numberOfUnits} ${planLength.unit}`
-							: planLength
+						planLength.timeUnit !== 'unspecified'
+							? `${planLength.numberOfUnits} ${planLength.timeUnit}`
+							: 'unspecified'
 					}`}</Typography>
 				</Box>
 			</CardContent>

@@ -37,7 +37,7 @@ const BrowsePlans: FC = () => {
 				.map(
 					plan =>
 						({
-							title: plan.title,
+							name: plan.name,
 							author: plan.author,
 							difficulty: plan.difficulty,
 							workoutsPerWeek: plan.workoutsPerWeek,
@@ -78,8 +78,6 @@ const BrowsePlans: FC = () => {
 	}, []);
 
 	const fetchMorePlans = useCallback(async () => {
-		setIsLoading(true);
-
 		const q = query(
 			workoutPlanCollection,
 			orderBy('createdAt', 'desc'),
@@ -87,6 +85,7 @@ const BrowsePlans: FC = () => {
 			limit(PAGE_ITEM_COUNT)
 		);
 
+		setIsLoading(true);
 		const fetchedPlanDocs = await getDocs(q);
 
 		if (fetchedPlanDocs.docs.length === 0) {

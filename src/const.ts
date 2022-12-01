@@ -1,1 +1,1 @@
-export const PAGE_ITEM_COUNT = 15;
+export const PAGE_ITEM_COUNT = 2;

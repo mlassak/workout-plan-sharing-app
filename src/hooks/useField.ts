@@ -1,10 +1,18 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 
-const useField = (id: string, required?: boolean) => {
+const useField = (
+	id: string,
+	required?: boolean,
+	helperText?: string,
+	validationFunc?: (val: string) => boolean
+) => {
 	const [value, setValue] = useState('');
 	const [touched, setTouched] = useState(false);
 
-	const error = required && touched && !value;
+	const error =
+		required &&
+		touched &&
+		(!value || (!!validationFunc && !validationFunc(value)));
 
 	return [
 		// Current value for convenient access
@@ -21,7 +29,7 @@ const useField = (id: string, required?: boolean) => {
 			onBlur: useCallback(() => setTouched(true), []),
 			required,
 			error,
-			helperText: error ? 'Required' : undefined
+			helperText: error ? helperText : undefined
 		}
 	] as const;
 };
