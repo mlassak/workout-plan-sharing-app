@@ -8,7 +8,7 @@ import {
 	Typography
 } from '@mui/material';
 import { deleteDoc } from 'firebase/firestore';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 import useLoggedInUser from '../../hooks/useLoggedInUser';
 import { WorkoutPlanMetadataWithId } from '../../types';
@@ -22,9 +22,11 @@ const WorkoutPlanCard: FC<WorkoutPlanMetadataWithId> = ({
 	workoutsPerWeek,
 	planLength
 }) => {
+	const [isDeleted, setIsDeleted] = useState<boolean>(false);
+
 	const user = useLoggedInUser();
 
-	return (
+	return !isDeleted ? (
 		<Card
 			sx={{
 				display: 'flex',
@@ -55,14 +57,17 @@ const WorkoutPlanCard: FC<WorkoutPlanMetadataWithId> = ({
 					<IconButton
 						color="error"
 						title="Delete"
-						onClick={async () => await deleteDoc(workoutPlanDocument(id))}
+						onClick={async () => {
+							setIsDeleted(true);
+							await deleteDoc(workoutPlanDocument(id));
+						}}
 					>
 						<Delete />
 					</IconButton>
 				</CardActions>
 			)}
 		</Card>
-	);
+	) : null;
 };
 
 export default WorkoutPlanCard;
