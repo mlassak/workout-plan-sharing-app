@@ -48,6 +48,5 @@ export const workoutPlanCollection = collection(
 	'workoutPlans'
 ) as CollectionReference<WorkoutPlan>;
 
-export const workoutPlanDocument = (id: string) => {
+export const workoutPlanDocument = (id: string) =>
 	doc(db, 'workoutPlans', id) as DocumentReference<WorkoutPlan>;
-};

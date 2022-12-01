@@ -7,12 +7,15 @@ import {
 	IconButton,
 	Typography
 } from '@mui/material';
+import { deleteDoc } from 'firebase/firestore';
 import { FC } from 'react';
 
 import useLoggedInUser from '../../hooks/useLoggedInUser';
-import { WorkoutPlanMetadata } from '../../types';
+import { WorkoutPlanMetadataWithId } from '../../types';
+import { workoutPlanDocument } from '../../utils/firebase';
 
-const WorkoutPlanCard: FC<WorkoutPlanMetadata> = ({
+const WorkoutPlanCard: FC<WorkoutPlanMetadataWithId> = ({
+	id,
 	name,
 	author,
 	difficulty,
@@ -49,7 +52,11 @@ const WorkoutPlanCard: FC<WorkoutPlanMetadata> = ({
 			</CardContent>
 			{user?.email === author && (
 				<CardActions>
-					<IconButton color="error" title="Delete">
+					<IconButton
+						color="error"
+						title="Delete"
+						onClick={async () => await deleteDoc(workoutPlanDocument(id))}
+					>
 						<Delete />
 					</IconButton>
 				</CardActions>

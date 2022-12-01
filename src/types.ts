@@ -30,6 +30,8 @@ export type WorkoutPlanMetadata = {
 	planLength: PlanLength;
 };
 
+export type WorkoutPlanMetadataWithId = WorkoutPlanMetadata & { id: string };
+
 export type WorkoutPlan = WorkoutPlanMetadata & {
 	description: string;
 	sessions: WorkoutSession[];

@@ -1,7 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
 import {
-	Firestore,
-	getDoc,
 	getDocs,
 	limit,
 	orderBy,
@@ -9,12 +7,16 @@ import {
 	QueryDocumentSnapshot,
 	startAfter
 } from 'firebase/firestore';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 
 import WorkoutPlanCard from '../components/workout-plans/WorkoutPlanCard';
 import { PAGE_ITEM_COUNT } from '../const';
 import usePageTitle from '../hooks/usePageTitle';
-import { WorkoutPlan, WorkoutPlanMetadata, WorkoutPlanWithId } from '../types';
+import {
+	WorkoutPlan,
+	WorkoutPlanMetadataWithId,
+	WorkoutPlanWithId
+} from '../types';
 import { workoutPlanCollection } from '../utils/firebase';
 
 const BrowsePlans: FC = () => {
@@ -33,12 +35,13 @@ const BrowsePlans: FC = () => {
 				.map(
 					plan =>
 						({
+							id: plan.id,
 							name: plan.name,
 							author: plan.author,
 							difficulty: plan.difficulty,
 							workoutsPerWeek: plan.workoutsPerWeek,
 							planLength: plan.planLength
-						} as WorkoutPlanMetadata)
+						} as WorkoutPlanMetadataWithId)
 				)
 				.map((plan, i) => <WorkoutPlanCard key={i} {...plan} />),
 		[plans]
@@ -123,14 +126,16 @@ const BrowsePlans: FC = () => {
 		<>
 			<Typography>Workout plans:</Typography>
 			<Box sx={{ display: 'flex', flexDirection: 'column' }}>{planCards}</Box>
-			{!isLoading && !isEmpty && (
-				<Button variant="outlined" onClick={fetchMorePlans}>
+			{!isLoading && (
+				<Button variant="outlined" onClick={fetchMorePlans} disabled={isEmpty}>
 					Get more
 				</Button>
 			)}
-			{/* <Typography>
-				No more plans available, feel free to sign in and create one!
-			</Typography> */}
+			{isEmpty && (
+				<Typography>
+					No more plans available, feel free to sign in and create one!
+				</Typography>
+			)}
 		</>
 	);
 };
