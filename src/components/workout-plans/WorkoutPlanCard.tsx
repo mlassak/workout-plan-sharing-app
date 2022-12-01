@@ -39,7 +39,11 @@ const WorkoutPlanCard: FC<WorkoutPlanMetadata> = ({
 					<Typography>Author: {author}</Typography>
 					<Typography>Diffculty level: {difficulty}</Typography>
 					<Typography>Workouts per week: {workoutsPerWeek}</Typography>
-					{!!planLength && <Typography>Length: {planLength}</Typography>}
+					<Typography>{`Plan length: ${
+						planLength !== 'Unspecified'
+							? `${planLength.numberOfUnits} ${planLength.unit}`
+							: planLength
+					}`}</Typography>
 				</Box>
 			</CardContent>
 			{user?.email === author && (

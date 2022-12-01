@@ -4,6 +4,15 @@ export type DifficultyLevel = 'Beginner' | 'Intermediate' | 'Advanced';
 
 export type WorkoutSessionType = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
 
+export type TimeUnit = 'd.' | 'w.' | 'm.' | 'y.';
+
+export type TimePeriod = {
+	numberOfUnits: number;
+	unit: TimeUnit;
+};
+
+export type PlanLength = 'Unspecified' | TimePeriod;
+
 export type Exercise = {
 	name: string;
 	reps: number;
@@ -20,7 +29,7 @@ export type WorkoutPlanMetadata = {
 	author: string;
 	difficulty: DifficultyLevel;
 	workoutsPerWeek: number;
-	planLength?: string;
+	planLength: PlanLength;
 };
 
 export type WorkoutPlan = WorkoutPlanMetadata & {
