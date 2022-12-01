@@ -12,7 +12,8 @@
 		"react-dom": "^18.2.0",
 		"react-flagkit": "^2.0.4",
 		"react-router-dom": "^6.4.3",
-		"react-scripts": "5.0.1"
+		"react-scripts": "5.0.1",
+		"reactfire": "^4.2.2"
 	},
 	"devDependencies": {
 		"@haaxor1689/eslint-config": "2.0.2",

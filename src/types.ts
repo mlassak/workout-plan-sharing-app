@@ -35,3 +35,5 @@ export type WorkoutPlan = WorkoutPlanMetadata & {
 	sessions: WorkoutSession[];
 	createdAt: Timestamp;
 };
+
+export type WorkoutPlanWithId = WorkoutPlan & { id: string };

@@ -1,5 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import {
+	Firestore,
+	getDoc,
 	getDocs,
 	limit,
 	orderBy,
@@ -12,28 +14,22 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import WorkoutPlanCard from '../components/workout-plans/WorkoutPlanCard';
 import { PAGE_ITEM_COUNT } from '../const';
 import usePageTitle from '../hooks/usePageTitle';
-import { WorkoutPlan, WorkoutPlanMetadata } from '../types';
+import { WorkoutPlan, WorkoutPlanMetadata, WorkoutPlanWithId } from '../types';
 import { workoutPlanCollection } from '../utils/firebase';
 
-const defaultDataQuery = query(
-	workoutPlanCollection,
-	orderBy('createdAt', 'desc'),
-	limit(PAGE_ITEM_COUNT)
-);
-
 const BrowsePlans: FC = () => {
-	const [displayedPlans, setDisplayedPlans] = useState<WorkoutPlan[]>([]);
-	const [isEmpty, setIsEmpty] = useState<boolean>(false);
-	const [lastDisplayed, setLastDisplayed] = useState<
+	const [plans, setPlans] = useState<WorkoutPlanWithId[]>([]);
+	const [lastVisible, setLastVisible] = useState<
 		QueryDocumentSnapshot<WorkoutPlan> | undefined
-	>();
+	>(undefined);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isEmpty, setIsEmpty] = useState<boolean>(false);
 
 	usePageTitle('Browse');
 
 	const planCards = useMemo(
 		() =>
-			displayedPlans
+			plans
 				.map(
 					plan =>
 						({
@@ -45,63 +41,79 @@ const BrowsePlans: FC = () => {
 						} as WorkoutPlanMetadata)
 				)
 				.map((plan, i) => <WorkoutPlanCard key={i} {...plan} />),
-		[displayedPlans]
+		[plans]
 	);
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchPlans = async () => {
 			setIsLoading(true);
 
-			const fetchedPlanDocs = await getDocs(defaultDataQuery);
+			const data = await getDocs(
+				query(
+					workoutPlanCollection,
+					orderBy('createdAt', 'desc'),
+					limit(PAGE_ITEM_COUNT)
+				)
+			);
 
-			if (fetchedPlanDocs.docs.length === 0) {
+			const plansData = data.docs.map(
+				planDoc => ({ ...planDoc.data(), id: planDoc.id } as WorkoutPlanWithId)
+			);
+
+			if (data.docs.length < PAGE_ITEM_COUNT) {
 				setIsEmpty(true);
+			}
+
+			if (data.docs.length === 0) {
 				setIsLoading(false);
 				return;
 			}
 
-			const last = fetchedPlanDocs.docs[fetchedPlanDocs.docs.length - 1];
-			const plansToDisplay = fetchedPlanDocs.docs.map(planDoc =>
-				planDoc.data()
-			);
+			if (data.docs.length === PAGE_ITEM_COUNT) {
+				const last = data.docs[data.docs.length - 1];
+				setLastVisible(last);
+			}
 
-			setIsEmpty(false);
-			setDisplayedPlans(plansToDisplay);
-			setLastDisplayed(last);
+			setPlans(plansData);
 			setIsLoading(false);
 		};
 
-		fetchData().catch(() => {
-			setIsLoading(false);
-			console.log('Fetching of workout plans failed'); //todo check
-		});
+		fetchPlans();
 	}, []);
 
-	const fetchMorePlans = useCallback(async () => {
-		const q = query(
-			workoutPlanCollection,
-			orderBy('createdAt', 'desc'),
-			startAfter(lastDisplayed),
-			limit(PAGE_ITEM_COUNT)
+	const fetchMorePlans = async () => {
+		setIsLoading(true);
+
+		const data = await getDocs(
+			query(
+				workoutPlanCollection,
+				orderBy('createdAt', 'desc'),
+				startAfter(lastVisible),
+				limit(PAGE_ITEM_COUNT)
+			)
 		);
 
-		setIsLoading(true);
-		const fetchedPlanDocs = await getDocs(q);
+		const newPlansData = data.docs.map(
+			planDoc => ({ ...planDoc.data(), id: planDoc.id } as WorkoutPlanWithId)
+		);
 
-		if (fetchedPlanDocs.docs.length === 0) {
+		if (data.docs.length < PAGE_ITEM_COUNT) {
 			setIsEmpty(true);
+		}
+
+		if (data.docs.length === 0) {
 			setIsLoading(false);
 			return;
 		}
 
-		const last = fetchedPlanDocs.docs[fetchedPlanDocs.docs.length - 1];
-		const newPlans = fetchedPlanDocs.docs.map(planDoc => planDoc.data());
+		if (data.docs.length === PAGE_ITEM_COUNT) {
+			const last = data.docs[data.docs.length - 1];
+			setLastVisible(last);
+		}
 
-		setIsEmpty(false);
-		setDisplayedPlans(displayedPlans => [...displayedPlans, ...newPlans]);
-		setLastDisplayed(last);
+		setPlans(prevPlans => [...prevPlans, ...newPlansData]);
 		setIsLoading(false);
-	}, []);
+	};
 
 	if (isLoading) {
 		return <Typography>Loading plans...</Typography>;
@@ -109,18 +121,16 @@ const BrowsePlans: FC = () => {
 
 	return (
 		<>
-			{!isEmpty && <Typography>Workout plans:</Typography>}
+			<Typography>Workout plans:</Typography>
 			<Box sx={{ display: 'flex', flexDirection: 'column' }}>{planCards}</Box>
 			{!isLoading && !isEmpty && (
 				<Button variant="outlined" onClick={fetchMorePlans}>
 					Get more
 				</Button>
 			)}
-			{isEmpty && (
-				<Typography>
-					No more plans available, feel free to sign in and create one!
-				</Typography>
-			)}
+			{/* <Typography>
+				No more plans available, feel free to sign in and create one!
+			</Typography> */}
 		</>
 	);
 };
