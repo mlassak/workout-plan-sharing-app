@@ -2,6 +2,7 @@ import {
 	Box,
 	Button,
 	FormControl,
+	IconButton,
 	InputLabel,
 	MenuItem,
 	Paper,
@@ -13,13 +14,16 @@ import {
 import { addDoc, Timestamp } from 'firebase/firestore';
 import { FC, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import useField from '../../../hooks/useField';
 import useLoggedInUser from '../../../hooks/useLoggedInUser';
 import { DifficultyLevel, TimeUnit, WorkoutSession } from '../../../types';
 import { workoutPlanCollection } from '../../../utils/firebase';
 
-const validateNumericInput = (value: string): boolean => {
+import WorkoutSessionForm from './WorkoutSessionForm';
+
+export const validateNumericInput = (value: string): boolean => {
 	const translatedValue = Number(value);
 
 	if (isNaN(translatedValue)) {
@@ -48,12 +52,51 @@ const CreatePlanForm: FC = () => {
 		'Required'
 	);
 
-	const [sessions, setSessions] = useState<WorkoutSession[]>([]);
+	const [workoutSessions, setWorkoutSessions] = useState<WorkoutSession[]>([]);
 
 	const [submitError, setSubmitError] = useState<string>();
 
 	const navigate = useNavigate();
 	const user = useLoggedInUser();
+
+	const renderWorkoutSessions = () => {
+		if (workoutSessions.length === 0) {
+			return null;
+		}
+
+		return workoutSessions.map((workout, i) => (
+			<WorkoutSessionForm
+				key={`workout-session-${i}`}
+				elemIndex={`workout-session-${i}`}
+				workoutSession={workout}
+				onUpdate={updatedWorkout => onUpdateWorkoutSession(i, updatedWorkout)}
+			/>
+		));
+	};
+
+	const onUpdateWorkoutSession = (
+		index: number,
+		updatedWorkoutSession?: WorkoutSession
+	) => {
+		const updatedSessions = [...workoutSessions];
+
+		if (!updatedWorkoutSession) {
+			updatedSessions.splice(index, 1);
+			setWorkoutSessions(updatedSessions);
+			return;
+		}
+
+		updatedSessions[index] = { ...updatedWorkoutSession };
+		setWorkoutSessions(updatedSessions);
+	};
+
+	const addWorkoutSession = () => {
+		const newWorkoutSession: WorkoutSession = {
+			id: workoutSessions.length,
+			exercises: []
+		};
+		setWorkoutSessions([...workoutSessions, newWorkoutSession]);
+	};
 
 	return (
 		<Paper
@@ -76,7 +119,7 @@ const CreatePlanForm: FC = () => {
 							timeUnit
 						},
 						description,
-						sessions,
+						sessions: workoutSessions,
 						createdAt: Timestamp.now()
 					});
 				} catch (err) {
@@ -182,6 +225,15 @@ const CreatePlanForm: FC = () => {
 				multiline
 				maxRows={Infinity}
 			/>
+			<Paper title="Workout sessions">
+				{renderWorkoutSessions()}
+				<IconButton onClick={addWorkoutSession}>
+					<AddCircleOutlineIcon />
+					<Typography sx={{ marginLeft: '0.3rem' }}>
+						Add workout session
+					</Typography>
+				</IconButton>
+			</Paper>
 			<Box
 				sx={{
 					display: 'flex',

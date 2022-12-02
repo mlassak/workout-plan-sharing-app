@@ -2,8 +2,6 @@ import { Timestamp } from 'firebase/firestore';
 
 export type DifficultyLevel = 'Beginner' | 'Intermediate' | 'Advanced';
 
-export type WorkoutSessionType = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
-
 export type TimeUnit = 'days' | 'weeks' | 'months' | 'years' | 'unspecified';
 
 export type PlanLength = {
@@ -11,14 +9,25 @@ export type PlanLength = {
 	timeUnit: TimeUnit;
 };
 
+export type ExerciseVolume = {
+	usesRange: boolean;
+	values: ExerciseVolumeRange;
+};
+
+export type ExerciseVolumeRange = {
+	min: number;
+	max: number;
+};
+
 export type Exercise = {
 	name: string;
-	reps: number;
-	sets: number;
+	reps: ExerciseVolume;
+	sets: ExerciseVolume;
 };
 
 export type WorkoutSession = {
-	type: WorkoutSessionType;
+	id: number;
+	name?: string;
 	exercises: Exercise[];
 };
 
