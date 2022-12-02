@@ -1,16 +1,9 @@
-import {
-	Box,
-	Button,
-	IconButton,
-	Paper,
-	TextField,
-	Typography
-} from '@mui/material';
+import { Box, IconButton, Paper, TextField, Typography } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Delete } from '@mui/icons-material';
 
-import { Exercise, ExerciseVolume, WorkoutSession } from '../../../types';
+import { Exercise, WorkoutSession } from '../../../types';
 import useField from '../../../hooks/useField';
 
 import ExerciseForm from './ExerciseForm';
@@ -34,8 +27,6 @@ const WorkoutSessionForm: FC<WorkoutSessionFormProps> = ({
 
 	const [_, setWorkoutSessionObj] = useState<WorkoutSession>(workoutSession); // todo check if this is even useful
 
-	// const [locked, setLocked] = useState<boolean>(false);
-
 	const renderExercises = () => {
 		if (exercises.length === 0) {
 			return null;
@@ -46,7 +37,6 @@ const WorkoutSessionForm: FC<WorkoutSessionFormProps> = ({
 				key={`${elemIndex}-exercise-${i}`}
 				elemIndex={`${elemIndex}-exercise-${i}`}
 				exercise={exercise}
-				// isLocked={locked}
 				onUpdate={updatedExercise => onUpdateExercise(i, updatedExercise)}
 			/>
 		));
@@ -87,12 +77,10 @@ const WorkoutSessionForm: FC<WorkoutSessionFormProps> = ({
 	};
 
 	useEffect(() => {
-		updateWorkoutSession(); //todo check
+		updateWorkoutSession();
 	}, [workoutSessionName, exercises]);
 
 	const updateWorkoutSession = () => {
-		// setLocked(true);
-
 		const updatedWorkoutSession: WorkoutSession = {
 			id: workoutSession.id,
 			name: workoutSessionName,
@@ -114,35 +102,14 @@ const WorkoutSessionForm: FC<WorkoutSessionFormProps> = ({
 				placeholder="(Optional) Enter a custom workout session name"
 				{...workoutSessionNameProps}
 				type={`${elemIndex}-workout-session-name`}
-				// disabled={locked}
 				sx={{ marginBottom: '0.2rem' }}
 			/>
 			{renderExercises()}
-			<IconButton
-				onClick={addExercise}
-				// disabled={locked}
-			>
+			<IconButton onClick={addExercise}>
 				<AddCircleOutlineIcon />
 				<Typography>Add exercise</Typography>
 			</IconButton>
 			<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-				{/* {locked ? (
-					<Button
-						onClick={() => {
-							setLocked(false);
-						}}
-					>
-						Edit workout
-					</Button>
-				) : (
-					<Button
-						onClick={() => {
-							updateWorkoutSession();
-						}}
-					>
-						Confirm workout
-					</Button>
-				)} */}
 				<IconButton onClick={removeWorkoutSession}>
 					<Delete />
 					<Typography>Delete workout</Typography>

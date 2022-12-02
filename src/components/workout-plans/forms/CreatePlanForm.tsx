@@ -18,59 +18,14 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import useField from '../../../hooks/useField';
 import useLoggedInUser from '../../../hooks/useLoggedInUser';
-import {
-	DifficultyLevel,
-	Exercise,
-	ExerciseVolume,
-	TimeUnit,
-	WorkoutSession
-} from '../../../types';
+import { DifficultyLevel, TimeUnit, WorkoutSession } from '../../../types';
 import { workoutPlanCollection } from '../../../utils/firebase';
+import {
+	validateNumericInput,
+	validateWorkoutSession
+} from '../../../utils/form-validators';
 
 import WorkoutSessionForm from './WorkoutSessionForm';
-
-const validateExerciseVolume = (exerciseVolume: ExerciseVolume) => {
-	if (exerciseVolume.usesRange) {
-		return exerciseVolume.values.min < exerciseVolume.values.max;
-	}
-	return exerciseVolume.values.min !== 0;
-};
-
-export const validateExercise = (exercise: Exercise) => {
-	if (!validateExerciseVolume(exercise.reps)) {
-		return false;
-	}
-
-	if (!validateExerciseVolume(exercise.sets)) {
-		return false;
-	}
-
-	return exercise.name.length !== 0;
-};
-
-const validateWorkoutSession = (workout: WorkoutSession) => {
-	if (workout.exercises.length === 0) {
-		return false;
-	}
-
-	for (let i = 0; i < workout.exercises.length; ++i) {
-		if (!validateExercise(workout.exercises[i])) {
-			return false;
-		}
-	}
-
-	return true;
-};
-
-export const validateNumericInput = (value: string): boolean => {
-	const translatedValue = Number(value);
-
-	if (isNaN(translatedValue)) {
-		return false;
-	}
-
-	return Math.round(translatedValue) > 0;
-};
 
 const CreatePlanForm: FC = () => {
 	const [planName, planNameProps] = useField('plan-name', true, 'Required');

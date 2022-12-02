@@ -15,20 +15,17 @@ import { FC, useEffect, useState } from 'react';
 
 import useField from '../../../hooks/useField';
 import { Exercise } from '../../../types';
-
-import { validateNumericInput } from './CreatePlanForm';
+import { validateNumericInput } from '../../../utils/form-validators';
 
 type ExerciseFormProps = {
 	elemIndex: string;
 	exercise: Exercise;
-	// isLocked: boolean;
 	onUpdate: (updatedExercise?: Exercise) => void;
 };
 
 const ExerciseForm: FC<ExerciseFormProps> = ({
 	elemIndex,
 	exercise,
-	// isLocked,
 	onUpdate
 }) => {
 	const [exerciseName, exerciseNameProps] = useField(
@@ -114,7 +111,6 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 					placeholder="Enter exercise name"
 					{...exerciseNameProps}
 					type={`${elemIndex}-exercise-name`}
-					// disabled={isLocked}
 					sx={{ marginBottom: '0.2rem' }}
 				/>
 				<Box sx={{ display: 'flex' }}>
@@ -122,7 +118,6 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 						label={repRangeDisabled ? 'Reps' : 'Min'}
 						{...repRangeLowerBoundProps}
 						type={`${elemIndex}-reps-lower-bound`}
-						// disabled={isLocked}
 						sx={{ flexGrow: '1' }}
 					/>
 					{!repRangeDisabled ? (
@@ -130,7 +125,6 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 							label="Max"
 							{...repRangeUpperBoundProps}
 							type={`${elemIndex}-reps-upper-bound`}
-							// disabled={isLocked}
 							sx={{ flexGrow: '1', marginLeft: '0.2rem' }}
 						/>
 					) : null}
@@ -139,7 +133,6 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 							control={
 								<Checkbox
 									onChange={() => setRepRangeDisabled(state => !state)}
-									// disabled={isLocked}
 								/>
 							}
 							label="Use rep range"
@@ -151,7 +144,6 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 						label={setsRangeDisabled ? 'Sets' : 'Min'}
 						{...setsRangeLowerBoundProps}
 						type={`${elemIndex}-sets-lower-bound`}
-						// disabled={isLocked}
 						sx={{ flexGrow: '1' }}
 					/>
 					{!setsRangeDisabled ? (
@@ -159,7 +151,6 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 							label="Max"
 							{...setsRangeUpperBoundProps}
 							type={`${elemIndex}-sets-upper-bound`}
-							// disabled={isLocked}
 							sx={{ flexGrow: '1', marginLeft: '0.2rem' }}
 						/>
 					) : null}
@@ -168,7 +159,6 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 							control={
 								<Checkbox
 									onChange={() => setSetsRangeDisabled(state => !state)}
-									// disabled={isLocked}
 								/>
 							}
 							label="Use set range"
@@ -177,10 +167,7 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 				</Box>
 			</CardContent>
 			<CardActions sx={{ display: 'flex' }}>
-				<IconButton
-					onClick={removeExercise}
-					// disabled={isLocked}
-				>
+				<IconButton onClick={removeExercise}>
 					<Delete />
 					<Typography>Delete exercise</Typography>
 				</IconButton>
