@@ -12,16 +12,55 @@ import {
 	Typography
 } from '@mui/material';
 import { addDoc, Timestamp } from 'firebase/firestore';
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import useField from '../../../hooks/useField';
 import useLoggedInUser from '../../../hooks/useLoggedInUser';
-import { DifficultyLevel, TimeUnit, WorkoutSession } from '../../../types';
+import {
+	DifficultyLevel,
+	Exercise,
+	ExerciseVolume,
+	TimeUnit,
+	WorkoutSession
+} from '../../../types';
 import { workoutPlanCollection } from '../../../utils/firebase';
 
 import WorkoutSessionForm from './WorkoutSessionForm';
+
+const validateExerciseVolume = (exerciseVolume: ExerciseVolume) => {
+	if (exerciseVolume.usesRange) {
+		return exerciseVolume.values.min < exerciseVolume.values.max;
+	}
+	return exerciseVolume.values.min !== 0;
+};
+
+export const validateExercise = (exercise: Exercise) => {
+	if (!validateExerciseVolume(exercise.reps)) {
+		return false;
+	}
+
+	if (!validateExerciseVolume(exercise.sets)) {
+		return false;
+	}
+
+	return exercise.name.length !== 0;
+};
+
+const validateWorkoutSession = (workout: WorkoutSession) => {
+	if (workout.exercises.length === 0) {
+		return false;
+	}
+
+	for (let i = 0; i < workout.exercises.length; ++i) {
+		if (!validateExercise(workout.exercises[i])) {
+			return false;
+		}
+	}
+
+	return true;
+};
 
 export const validateNumericInput = (value: string): boolean => {
 	const translatedValue = Number(value);
@@ -58,6 +97,15 @@ const CreatePlanForm: FC = () => {
 
 	const navigate = useNavigate();
 	const user = useLoggedInUser();
+
+	const hasValidWorkoutContents = useMemo(() => {
+		for (let i = 0; i < workoutSessions.length; ++i) {
+			if (!validateWorkoutSession(workoutSessions[i])) {
+				return false;
+			}
+		}
+		return true;
+	}, [workoutSessions]);
 
 	const renderWorkoutSessions = () => {
 		if (workoutSessions.length === 0) {
@@ -252,7 +300,11 @@ const CreatePlanForm: FC = () => {
 						{submitError}
 					</Typography>
 				)}
-				<Button type="submit" variant="outlined">
+				<Button
+					type="submit"
+					variant="outlined"
+					disabled={!hasValidWorkoutContents}
+				>
 					Create plan
 				</Button>
 			</Box>
