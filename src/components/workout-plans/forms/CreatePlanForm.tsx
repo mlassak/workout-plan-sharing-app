@@ -30,7 +30,12 @@ import WorkoutSessionForm from './WorkoutSessionForm';
 const CreatePlanForm: FC = () => {
 	const [planName, planNameProps] = useField('plan-name', true, 'Required');
 	const [difficulty, setDifficulty] = useState<DifficultyLevel>('Beginner');
-	const [workoutsPerWeek, setWorkoutsPerWeek] = useState<string>('1');
+	const [workoutsPerWeek, workoutsPerWeekProps] = useField(
+		'workouts-per-week',
+		true,
+		'A non-zero, positive numeric value is required',
+		validateNumericInput
+	);
 
 	const [timeCommitment, timeCommitmentProps] = useField(
 		'num-of-units',
@@ -197,29 +202,12 @@ const CreatePlanForm: FC = () => {
 					</Select>
 				</FormControl>
 			</Paper>
-			<FormControl fullWidth>
-				<InputLabel id="workouts-per-week-select-label">
-					Workouts per week
-				</InputLabel>
-				<Select
-					labelId="workouts-per-week-select-label"
-					id="workouts-per-week-select"
-					value={workoutsPerWeek}
-					label="Workouts per week"
-					onChange={(e: SelectChangeEvent) => {
-						e.preventDefault();
-						setWorkoutsPerWeek(e.target.value);
-					}}
-				>
-					<MenuItem value={1}>1</MenuItem>
-					<MenuItem value={2}>2</MenuItem>
-					<MenuItem value={3}>3</MenuItem>
-					<MenuItem value={4}>4</MenuItem>
-					<MenuItem value={5}>5</MenuItem>
-					<MenuItem value={6}>6</MenuItem>
-					<MenuItem value={7}>7</MenuItem>
-				</Select>
-			</FormControl>
+			<TextField
+				label="Workouts per week"
+				placeholder="Enter number of workouts per week"
+				{...workoutsPerWeekProps}
+				type="workouts-per-week"
+			/>
 			<TextField
 				label="Description"
 				placeholder="Please thorougly describe your workout plan here"
