@@ -30,13 +30,13 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 	);
 
 	const [repRangeDisabled, setRepRangeDisabled] = useState<boolean>(true);
-	const [repRangeLowerBound, repRangeLowerBoundProps] = useField(
+	const [repRangeMin, repRangeMinProps] = useField(
 		`${elemIndex}-reps-lower-bound`,
 		true,
 		'Required',
 		validateNumericInput
 	);
-	const [repRangeUpperBound, repRangeUpperBoundProps] = useField(
+	const [repRangeMax, repRangeMaxProps] = useField(
 		`${elemIndex}-reps-upper-bound`,
 		true,
 		'Required',
@@ -44,13 +44,13 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 	);
 
 	const [setsRangeDisabled, setSetsRangeDisabled] = useState<boolean>(true);
-	const [setsRangeLowerBound, setsRangeLowerBoundProps] = useField(
+	const [setsRangeMin, setsRangeMinProps] = useField(
 		`${elemIndex}-reps-lower-bound`,
 		true,
 		'Required',
 		validateNumericInput
 	);
-	const [setsRangeUpperBound, setsRangeUpperBoundProps] = useField(
+	const [setsRangeMax, setsRangeMaxProps] = useField(
 		`${elemIndex}-reps-upper-bound`,
 		true,
 		'Required',
@@ -62,11 +62,11 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 	}, [
 		exerciseName,
 		repRangeDisabled,
-		repRangeLowerBound,
-		repRangeUpperBound,
+		repRangeMin,
+		repRangeMax,
 		setsRangeDisabled,
-		setsRangeLowerBound,
-		setsRangeUpperBound
+		setsRangeMin,
+		setsRangeMax
 	]);
 
 	const updateExercise = () => {
@@ -75,15 +75,15 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 			reps: {
 				usesRange: !repRangeDisabled,
 				values: {
-					min: Number(repRangeLowerBound),
-					max: Number(repRangeUpperBound)
+					min: Number(repRangeMin),
+					max: Number(repRangeMax)
 				}
 			},
 			sets: {
 				usesRange: !setsRangeDisabled,
 				values: {
-					min: Number(setsRangeLowerBound),
-					max: Number(setsRangeUpperBound)
+					min: Number(setsRangeMin),
+					max: Number(setsRangeMax)
 				}
 			}
 		};
@@ -108,14 +108,14 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 				<Box sx={{ display: 'flex' }}>
 					<TextField
 						label={repRangeDisabled ? 'Reps' : 'Min'}
-						{...repRangeLowerBoundProps}
+						{...repRangeMinProps}
 						type={`${elemIndex}-reps-lower-bound`}
 						sx={{ flexGrow: '1' }}
 					/>
 					{!repRangeDisabled ? (
 						<TextField
 							label="Max"
-							{...repRangeUpperBoundProps}
+							{...repRangeMaxProps}
 							type={`${elemIndex}-reps-upper-bound`}
 							sx={{ flexGrow: '1', marginLeft: '0.2rem' }}
 						/>
@@ -134,14 +134,14 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 				<Box sx={{ display: 'flex' }}>
 					<TextField
 						label={setsRangeDisabled ? 'Sets' : 'Min'}
-						{...setsRangeLowerBoundProps}
+						{...setsRangeMinProps}
 						type={`${elemIndex}-sets-lower-bound`}
 						sx={{ flexGrow: '1' }}
 					/>
 					{!setsRangeDisabled ? (
 						<TextField
 							label="Max"
-							{...setsRangeUpperBoundProps}
+							{...setsRangeMaxProps}
 							type={`${elemIndex}-sets-upper-bound`}
 							sx={{ flexGrow: '1', marginLeft: '0.2rem' }}
 						/>
