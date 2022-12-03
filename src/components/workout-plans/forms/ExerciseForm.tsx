@@ -107,32 +107,6 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 				/>
 				<Box sx={{ display: 'flex' }}>
 					<TextField
-						label={repRangeDisabled ? 'Reps' : 'Min'}
-						{...repRangeMinProps}
-						type={`${elemIndex}-reps-lower-bound`}
-						sx={{ flexGrow: '1' }}
-					/>
-					{!repRangeDisabled ? (
-						<TextField
-							label="Max"
-							{...repRangeMaxProps}
-							type={`${elemIndex}-reps-upper-bound`}
-							sx={{ flexGrow: '1', marginLeft: '0.2rem' }}
-						/>
-					) : null}
-					<FormGroup sx={{ marginLeft: '0.2rem' }}>
-						<FormControlLabel
-							control={
-								<Checkbox
-									onChange={() => setRepRangeDisabled(state => !state)}
-								/>
-							}
-							label="Use rep range"
-						/>
-					</FormGroup>
-				</Box>
-				<Box sx={{ display: 'flex' }}>
-					<TextField
 						label={setsRangeDisabled ? 'Sets' : 'Min'}
 						{...setsRangeMinProps}
 						type={`${elemIndex}-sets-lower-bound`}
@@ -154,6 +128,32 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 								/>
 							}
 							label="Use set range"
+						/>
+					</FormGroup>
+				</Box>
+				<Box sx={{ display: 'flex' }}>
+					<TextField
+						label={repRangeDisabled ? 'Reps' : 'Min'}
+						{...repRangeMinProps}
+						type={`${elemIndex}-reps-lower-bound`}
+						sx={{ flexGrow: '1' }}
+					/>
+					{!repRangeDisabled ? (
+						<TextField
+							label="Max"
+							{...repRangeMaxProps}
+							type={`${elemIndex}-reps-upper-bound`}
+							sx={{ flexGrow: '1', marginLeft: '0.2rem' }}
+						/>
+					) : null}
+					<FormGroup sx={{ marginLeft: '0.2rem' }}>
+						<FormControlLabel
+							control={
+								<Checkbox
+									onChange={() => setRepRangeDisabled(state => !state)}
+								/>
+							}
+							label="Use rep range"
 						/>
 					</FormGroup>
 				</Box>
