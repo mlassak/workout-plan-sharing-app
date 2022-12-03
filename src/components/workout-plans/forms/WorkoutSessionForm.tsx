@@ -25,18 +25,15 @@ const WorkoutSessionForm: FC<WorkoutSessionFormProps> = ({
 	);
 	const [exercises, setExercises] = useState<Exercise[]>([]);
 
-	const [_, setWorkoutSessionObj] = useState<WorkoutSession>(workoutSession); // todo check if this is even useful
-
 	const renderExercises = () => {
 		if (exercises.length === 0) {
 			return null;
 		}
 
-		return exercises.map((exercise, i) => (
+		return exercises.map((_, i) => (
 			<ExerciseForm
 				key={`${elemIndex}-exercise-${i}`}
 				elemIndex={`${elemIndex}-exercise-${i}`}
-				exercise={exercise}
 				onUpdate={updatedExercise => onUpdateExercise(i, updatedExercise)}
 			/>
 		));
@@ -87,7 +84,6 @@ const WorkoutSessionForm: FC<WorkoutSessionFormProps> = ({
 			exercises
 		};
 
-		setWorkoutSessionObj(updatedWorkoutSession);
 		onUpdate(updatedWorkoutSession);
 	};
 

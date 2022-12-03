@@ -19,15 +19,10 @@ import { validateNumericInput } from '../../../utils/form-validators';
 
 type ExerciseFormProps = {
 	elemIndex: string;
-	exercise: Exercise;
 	onUpdate: (updatedExercise?: Exercise) => void;
 };
 
-const ExerciseForm: FC<ExerciseFormProps> = ({
-	elemIndex,
-	exercise,
-	onUpdate
-}) => {
+const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 	const [exerciseName, exerciseNameProps] = useField(
 		`${elemIndex}-exercise-name`,
 		true,
@@ -62,8 +57,6 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 		validateNumericInput
 	);
 
-	const [_, setExerciseObj] = useState<Exercise>(exercise); // todo check if this is even useful
-
 	useEffect(() => {
 		updateExercise();
 	}, [
@@ -95,7 +88,6 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 			}
 		};
 
-		setExerciseObj(updatedExerciseObj);
 		onUpdate(updatedExerciseObj);
 	};
 
