@@ -37,7 +37,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
 			</AppBar>
 
 			<Container
-				maxWidth="sm"
+				maxWidth="lg"
 				component="main"
 				sx={{
 					display: 'flex',
