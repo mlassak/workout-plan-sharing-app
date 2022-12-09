@@ -1,19 +1,7 @@
-import { Delete, ArrowForward } from '@mui/icons-material';
-import {
-	Box,
-	Card,
-	CardActions,
-	CardContent,
-	IconButton,
-	Typography
-} from '@mui/material';
-import { deleteDoc } from 'firebase/firestore';
-import { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, Typography } from '@mui/material';
+import { FC } from 'react';
 
-import useLoggedInUser from '../../../hooks/useLoggedInUser';
 import { Exercise } from '../../../types';
-import { workoutPlanDocument } from '../../../utils/firebase';
 
 const SessionCard: FC<Exercise> = ({ name, reps, sets }) => (
 	<Card
@@ -21,6 +9,7 @@ const SessionCard: FC<Exercise> = ({ name, reps, sets }) => (
 			display: 'flex',
 			flexDirection: 'column',
 			justifyContent: 'space-between',
+			bgcolor: '#616161',
 			width: '100%',
 			textAlign: 'left',
 			padding: '5px'
@@ -30,25 +19,21 @@ const SessionCard: FC<Exercise> = ({ name, reps, sets }) => (
 			<Typography>Excercise: {name}</Typography>
 			<Typography>
 				Reps:{' '}
-				<>
-					{reps.usesRange && (
-						<>
-							Range: {reps.values.min} {reps.values.max}
-						</>
-					)}
-					{!reps.usesRange && <>Repeats: {reps.values.min}</>}
-				</>
+				{reps.usesRange && (
+					<>
+						{reps.values.min}-{reps.values.max} Repeats
+					</>
+				)}
+				{!reps.usesRange && <> {reps.values.min} Repeats</>}
 			</Typography>
 			<Typography>
 				Sets:{' '}
-				<>
-					{sets.usesRange && (
-						<>
-							Range: {sets.values.min} {sets.values.max}
-						</>
-					)}
-					{!sets.usesRange && <>Repeats: {sets.values.min}</>}
-				</>
+				{sets.usesRange && (
+					<>
+						{sets.values.min}-{sets.values.max} Repeats
+					</>
+				)}
+				{!sets.usesRange && <> {sets.values.min} Repeats</>}
 			</Typography>
 		</CardContent>
 	</Card>
