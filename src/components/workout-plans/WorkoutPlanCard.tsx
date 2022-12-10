@@ -1,4 +1,4 @@
-import { Delete } from '@mui/icons-material';
+import { Delete, ArrowForward } from '@mui/icons-material';
 import {
 	Box,
 	Card,
@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { deleteDoc } from 'firebase/firestore';
 import { FC, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import useLoggedInUser from '../../hooks/useLoggedInUser';
 import { WorkoutPlanMetadataWithId } from '../../types';
@@ -24,6 +25,7 @@ const WorkoutPlanCard: FC<WorkoutPlanMetadataWithId> = ({
 }) => {
 	const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
+	const navigate = useNavigate();
 	const user = useLoggedInUser();
 
 	return !isDeleted ? (
@@ -52,8 +54,8 @@ const WorkoutPlanCard: FC<WorkoutPlanMetadataWithId> = ({
 					}`}</Typography>
 				</Box>
 			</CardContent>
-			{user?.email === author && (
-				<CardActions>
+			<CardActions>
+				{user?.email === author && (
 					<IconButton
 						color="error"
 						title="Delete"
@@ -64,8 +66,18 @@ const WorkoutPlanCard: FC<WorkoutPlanMetadataWithId> = ({
 					>
 						<Delete />
 					</IconButton>
-				</CardActions>
-			)}
+				)}
+				<IconButton
+					color="success"
+					title="Browse"
+					onClick={async () => {
+						console.log('Show');
+						navigate(`/plan/${id}`);
+					}}
+				>
+					<ArrowForward />
+				</IconButton>
+			</CardActions>
 		</Card>
 	) : null;
 };
