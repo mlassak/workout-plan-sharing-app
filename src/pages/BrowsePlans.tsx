@@ -23,7 +23,6 @@ import {
 import { FC, useEffect, useMemo, useState } from 'react';
 
 import WorkoutPlanCard from '../components/workout-plans/WorkoutPlanCard';
-import SearchForm from '../components/workout-plans/forms/SearchForm';
 import { PAGE_ITEM_COUNT } from '../const';
 import usePageTitle from '../hooks/usePageTitle';
 import {

@@ -19,7 +19,7 @@ type Props = {
 	counter: number;
 };
 
-const SessionCardDetail: FC<WorkoutSession> = ({ id, name, exercises }) => (
+const SessionCardDetail: FC<WorkoutSession> = ({ exercises }) => (
 	<Grid container spacing={2} marginTop="0.5rem">
 		{exercises.map((exercise, i) => (
 			<Grid key={i} item xs={12} md={6}>
