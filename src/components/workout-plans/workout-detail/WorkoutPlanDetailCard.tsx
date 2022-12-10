@@ -21,7 +21,6 @@ import { WorkoutPlanWithId } from '../../../types';
 import SessionCard from './SessionDetailCard';
 
 const WorkoutPlanDetailCard: FC<WorkoutPlanWithId> = ({
-	id,
 	name,
 	author,
 	difficulty,
