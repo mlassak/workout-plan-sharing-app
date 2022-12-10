@@ -20,12 +20,12 @@ const Home = () => {
 				<FitnessCenterIcon
 					sx={{
 						color: 'primary.main',
-						fontSize: '24rem',
+						fontSize: '20rem',
 						mixBlendMode: 'difference'
 					}}
 				/>
-				<Typography variant="h1" fontWeight="bolder" align="center">
-					Fedor&apos;s iron archive
+				<Typography variant="h2" fontWeight="bolder" align="center">
+					Fedor&apos;s gym hub
 				</Typography>
 			</Box>
 			{user?.email && (
