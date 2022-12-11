@@ -1,12 +1,7 @@
-import {
-	ArrowForward,
-	KeyboardArrowDown,
-	KeyboardArrowUp
-} from '@mui/icons-material';
+import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import {
 	Box,
 	Card,
-	CardActions,
 	CardContent,
 	CardHeader,
 	Collapse,
@@ -139,17 +134,6 @@ const WorkoutPlanDetailCard: FC<WorkoutPlanWithId> = ({
 					))}
 				</Box>
 			</CardContent>
-			<CardActions>
-				<IconButton
-					color="success"
-					title="Browse"
-					onClick={async () => {
-						console.log('Add to my collection');
-					}}
-				>
-					<ArrowForward />
-				</IconButton>
-			</CardActions>
 		</Card>
 	);
 };
