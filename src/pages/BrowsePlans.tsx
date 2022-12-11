@@ -176,10 +176,6 @@ const BrowsePlans: FC = () => {
 		return custom_qc;
 	};
 
-	if (isLoading) {
-		return <Typography>Loading plans...</Typography>;
-	}
-
 	return (
 		<>
 			<Paper
@@ -232,10 +228,12 @@ const BrowsePlans: FC = () => {
 			<Grid container spacing={2}>
 				{planCards}
 			</Grid>
-			{!isLoading && (
+			{!isLoading ? (
 				<Button variant="outlined" onClick={fetchMorePlans} disabled={isEmpty}>
 					Get more
 				</Button>
+			) : (
+				<Typography>Loading plans...</Typography>
 			)}
 			{isEmpty && (
 				<Typography>
