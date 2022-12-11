@@ -48,7 +48,7 @@ const WorkoutPlanDetailCard: FC<WorkoutPlanWithId> = ({
 						}}
 					>
 						<CardHeader
-							title="Workout Info"
+							title="Workout plan info"
 							onClick={() => setOpen(!open)}
 							action={
 								<IconButton aria-label="expand" size="small">
