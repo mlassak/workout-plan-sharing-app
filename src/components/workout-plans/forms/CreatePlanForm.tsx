@@ -77,6 +77,7 @@ const CreatePlanForm: FC = () => {
 				key={`workout-session-${i}`}
 				elemIndex={`workout-session-${i}`}
 				workoutSession={workout}
+				bgColor={i % 2 === 0 ? '#1a237e' : '#311b92'}
 				onUpdate={updatedWorkout => onUpdateWorkoutSession(i, updatedWorkout)}
 			/>
 		));
@@ -218,12 +219,21 @@ const CreatePlanForm: FC = () => {
 			/>
 			<Paper title="Workout sessions">
 				{renderWorkoutSessions()}
-				<IconButton onClick={addWorkoutSession}>
-					<AddCircleOutlineIcon />
-					<Typography sx={{ marginLeft: '0.3rem' }}>
-						Add workout session
-					</Typography>
-				</IconButton>
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'center',
+						marginTop: '0.5rem',
+						marginBottom: '0.5rem'
+					}}
+				>
+					<IconButton onClick={addWorkoutSession}>
+						<AddCircleOutlineIcon />
+						<Typography sx={{ marginLeft: '0.3rem' }}>
+							Add workout session
+						</Typography>
+					</IconButton>
+				</Box>
 			</Paper>
 			<Box
 				sx={{

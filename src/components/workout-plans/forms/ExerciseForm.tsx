@@ -103,9 +103,16 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 					placeholder="Enter exercise name"
 					{...exerciseNameProps}
 					type={`${elemIndex}-exercise-name`}
-					sx={{ marginBottom: '0.2rem' }}
+					sx={{ paddingBottom: '0.4rem' }}
 				/>
-				<Box sx={{ display: 'flex' }}>
+				<Box
+					sx={{
+						display: 'flex',
+						alignItems: 'flex-start',
+						alignContent: 'flex-start',
+						paddingBottom: '0.4rem'
+					}}
+				>
 					<TextField
 						label={setsRangeDisabled ? 'Sets' : 'Min'}
 						{...setsRangeMinProps}
@@ -117,10 +124,10 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 							label="Max"
 							{...setsRangeMaxProps}
 							type={`${elemIndex}-sets-upper-bound`}
-							sx={{ flexGrow: '1', marginLeft: '0.2rem' }}
+							sx={{ flexGrow: '1', marginLeft: '0.4rem' }}
 						/>
 					) : null}
-					<FormGroup sx={{ marginLeft: '0.2rem' }}>
+					<FormGroup sx={{ marginLeft: '0.4rem' }}>
 						<FormControlLabel
 							control={
 								<Checkbox
@@ -143,10 +150,10 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 							label="Max"
 							{...repRangeMaxProps}
 							type={`${elemIndex}-reps-upper-bound`}
-							sx={{ flexGrow: '1', marginLeft: '0.2rem' }}
+							sx={{ flexGrow: '1', marginLeft: '0.4rem' }}
 						/>
 					) : null}
-					<FormGroup sx={{ marginLeft: '0.2rem' }}>
+					<FormGroup sx={{ marginLeft: '0.4rem' }}>
 						<FormControlLabel
 							control={
 								<Checkbox
@@ -158,7 +165,7 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 					</FormGroup>
 				</Box>
 			</CardContent>
-			<CardActions sx={{ display: 'flex' }}>
+			<CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
 				<IconButton onClick={removeExercise}>
 					<Delete />
 					<Typography>Delete exercise</Typography>
