@@ -54,7 +54,17 @@ const WorkoutPlanCard: FC<WorkoutPlanMetadataWithId> = ({
 					}`}</Typography>
 				</Box>
 			</CardContent>
-			<CardActions>
+			<CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+				<IconButton
+					color="success"
+					title="Browse"
+					onClick={async () => {
+						console.log('Show');
+						navigate(`/plan/${id}`);
+					}}
+				>
+					<ArrowForward />
+				</IconButton>
 				{user?.email === author && (
 					<IconButton
 						color="error"
@@ -67,16 +77,6 @@ const WorkoutPlanCard: FC<WorkoutPlanMetadataWithId> = ({
 						<Delete />
 					</IconButton>
 				)}
-				<IconButton
-					color="success"
-					title="Browse"
-					onClick={async () => {
-						console.log('Show');
-						navigate(`/plan/${id}`);
-					}}
-				>
-					<ArrowForward />
-				</IconButton>
 			</CardActions>
 		</Card>
 	) : null;
