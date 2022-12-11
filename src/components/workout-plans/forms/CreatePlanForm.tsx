@@ -24,6 +24,7 @@ import {
 	validateNumericInput,
 	validateWorkoutSession
 } from '../../../utils/form-validators';
+import { SESSION_COLOR_A, SESSION_COLOR_B } from '../../../utils/theme';
 
 import WorkoutSessionForm from './WorkoutSessionForm';
 
@@ -77,7 +78,7 @@ const CreatePlanForm: FC = () => {
 				key={`workout-session-${i}`}
 				elemIndex={`workout-session-${i}`}
 				workoutSession={workout}
-				bgColor={i % 2 === 0 ? '#1a237e' : '#311b92'}
+				bgColor={i % 2 === 0 ? SESSION_COLOR_A : SESSION_COLOR_B}
 				onUpdate={updatedWorkout => onUpdateWorkoutSession(i, updatedWorkout)}
 			/>
 		));
