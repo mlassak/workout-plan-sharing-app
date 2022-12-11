@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
+import { ReactComponent as HamsterLogo } from '../images/hamster-logo.svg';
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 
@@ -17,11 +17,12 @@ const Home = () => {
 					alignItems: 'center'
 				}}
 			>
-				<FitnessCenterIcon
-					sx={{
+				<HamsterLogo
+					style={{
 						color: 'primary.main',
 						fontSize: '20rem',
-						mixBlendMode: 'difference'
+						mixBlendMode: 'difference',
+						marginBottom: '1rem'
 					}}
 				/>
 				<Typography variant="h2" fontWeight="bolder" align="center">
