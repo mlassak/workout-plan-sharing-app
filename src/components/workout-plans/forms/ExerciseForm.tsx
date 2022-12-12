@@ -117,14 +117,12 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 					placeholder="Enter exercise name"
 					{...exerciseNameProps}
 					type={`${elemIndex}-exercise-name`}
-					sx={{ paddingBottom: '0.4rem' }}
+					sx={{ marginBottom: '0.4rem' }}
 				/>
 				<Box
 					sx={{
 						display: 'flex',
-						alignItems: 'flex-start',
-						alignContent: 'flex-start',
-						paddingBottom: '0.4rem'
+						alignItems: 'flex-start'
 					}}
 				>
 					<TextField
@@ -141,17 +139,17 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 							sx={{ flexGrow: '1', marginLeft: '0.4rem' }}
 						/>
 					) : null}
-					<FormGroup sx={{ marginLeft: '0.4rem' }}>
-						<FormControlLabel
-							control={
-								<Checkbox
-									onChange={() => setSetsRangeDisabled(state => !state)}
-								/>
-							}
-							label="Use set range"
-						/>
-					</FormGroup>
 				</Box>
+				<FormGroup>
+					<FormControlLabel
+						control={
+							<Checkbox
+								onChange={() => setSetsRangeDisabled(state => !state)}
+							/>
+						}
+						label="Use set range"
+					/>
+				</FormGroup>
 				<Box sx={{ display: 'flex' }}>
 					<TextField
 						label={repRangeDisabled ? 'Reps' : 'Min'}
@@ -167,17 +165,15 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 							sx={{ flexGrow: '1', marginLeft: '0.4rem' }}
 						/>
 					) : null}
-					<FormGroup sx={{ marginLeft: '0.4rem' }}>
-						<FormControlLabel
-							control={
-								<Checkbox
-									onChange={() => setRepRangeDisabled(state => !state)}
-								/>
-							}
-							label="Use rep range"
-						/>
-					</FormGroup>
 				</Box>
+				<FormGroup>
+					<FormControlLabel
+						control={
+							<Checkbox onChange={() => setRepRangeDisabled(state => !state)} />
+						}
+						label="Use rep range"
+					/>
+				</FormGroup>
 			</CardContent>
 			<CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
 				<IconButton onClick={removeExercise}>
