@@ -19,10 +19,15 @@ import { validateNumericInput } from '../../../utils/form-validators';
 
 type ExerciseFormProps = {
 	elemIndex: string;
+	bgColor: string;
 	onUpdate: (updatedExercise?: Exercise) => void;
 };
 
-const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
+const ExerciseForm: FC<ExerciseFormProps> = ({
+	elemIndex,
+	bgColor,
+	onUpdate
+}) => {
 	const [exerciseName, exerciseNameProps] = useField(
 		`${elemIndex}-exercise-name`,
 		true,
@@ -96,7 +101,16 @@ const ExerciseForm: FC<ExerciseFormProps> = ({ elemIndex, onUpdate }) => {
 	};
 
 	return (
-		<Card sx={{ display: 'flex', flexDirection: 'column' }}>
+		<Card
+			sx={{
+				display: 'flex',
+				flexDirection: 'column',
+				bgcolor: bgColor,
+				marginLeft: '0.5rem',
+				marginRight: '0.5rem',
+				marginTop: '0.5rem'
+			}}
+		>
 			<CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
 				<TextField
 					label="Exercise name"

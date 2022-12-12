@@ -36,6 +36,7 @@ const WorkoutSessionForm: FC<WorkoutSessionFormProps> = ({
 			<ExerciseForm
 				key={`${elemIndex}-exercise-${i}`}
 				elemIndex={`${elemIndex}-exercise-${i}`}
+				bgColor={bgColor}
 				onUpdate={updatedExercise => onUpdateExercise(i, updatedExercise)}
 			/>
 		));
@@ -111,7 +112,7 @@ const WorkoutSessionForm: FC<WorkoutSessionFormProps> = ({
 				sx={{ marginBottom: '0.2rem' }}
 			/>
 			{renderExercises()}
-			<IconButton onClick={addExercise}>
+			<IconButton onClick={addExercise} sx={{ marginTop: '0.5rem' }}>
 				<AddCircleOutlineIcon />
 				<Typography sx={{ marginLeft: '0.3rem' }}>Add exercise</Typography>
 			</IconButton>
