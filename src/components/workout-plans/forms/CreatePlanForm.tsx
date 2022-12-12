@@ -24,6 +24,7 @@ import {
 	validateNumericInput,
 	validateWorkoutSession
 } from '../../../utils/form-validators';
+import { SESSION_COLOR_A, SESSION_COLOR_B } from '../../../utils/theme';
 
 import WorkoutSessionForm from './WorkoutSessionForm';
 
@@ -77,6 +78,7 @@ const CreatePlanForm: FC = () => {
 				key={`workout-session-${i}`}
 				elemIndex={`workout-session-${i}`}
 				workoutSession={workout}
+				bgColor={i % 2 === 0 ? SESSION_COLOR_A : SESSION_COLOR_B}
 				onUpdate={updatedWorkout => onUpdateWorkoutSession(i, updatedWorkout)}
 			/>
 		));
@@ -218,12 +220,21 @@ const CreatePlanForm: FC = () => {
 			/>
 			<Paper title="Workout sessions">
 				{renderWorkoutSessions()}
-				<IconButton onClick={addWorkoutSession}>
-					<AddCircleOutlineIcon />
-					<Typography sx={{ marginLeft: '0.3rem' }}>
-						Add workout session
-					</Typography>
-				</IconButton>
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'center',
+						marginTop: '0.5rem',
+						marginBottom: '0.5rem'
+					}}
+				>
+					<IconButton onClick={addWorkoutSession}>
+						<AddCircleOutlineIcon />
+						<Typography sx={{ marginLeft: '0.3rem' }}>
+							Add workout session
+						</Typography>
+					</IconButton>
+				</Box>
 			</Paper>
 			<Box
 				sx={{

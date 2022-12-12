@@ -11,6 +11,7 @@ import {
 import { FC, useState } from 'react';
 
 import { WorkoutSession } from '../../../types';
+import { SESSION_COLOR_A, SESSION_COLOR_B } from '../../../utils/theme';
 
 import ExcerciseCard from './ExcerciseCard';
 
@@ -37,7 +38,7 @@ const SessionCard: FC<Props> = props => {
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'space-between',
-				bgcolor: props.counter % 2 === 0 ? '#1a237e' : '#311b92',
+				bgcolor: props.counter % 2 === 0 ? SESSION_COLOR_A : SESSION_COLOR_B,
 				width: '100%',
 				textAlign: 'left',
 				marginTop: '2rem'

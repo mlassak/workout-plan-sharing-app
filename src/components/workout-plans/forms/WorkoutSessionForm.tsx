@@ -11,12 +11,14 @@ import ExerciseForm from './ExerciseForm';
 type WorkoutSessionFormProps = {
 	elemIndex: string;
 	workoutSession: WorkoutSession;
+	bgColor: string;
 	onUpdate: (updatedWorkoutSession?: WorkoutSession) => void;
 };
 
 const WorkoutSessionForm: FC<WorkoutSessionFormProps> = ({
 	elemIndex,
 	workoutSession,
+	bgColor,
 	onUpdate
 }) => {
 	const [workoutSessionName, workoutSessionNameProps] = useField(
@@ -34,6 +36,7 @@ const WorkoutSessionForm: FC<WorkoutSessionFormProps> = ({
 			<ExerciseForm
 				key={`${elemIndex}-exercise-${i}`}
 				elemIndex={`${elemIndex}-exercise-${i}`}
+				bgColor={bgColor}
 				onUpdate={updatedExercise => onUpdateExercise(i, updatedExercise)}
 			/>
 		));
@@ -92,7 +95,15 @@ const WorkoutSessionForm: FC<WorkoutSessionFormProps> = ({
 	};
 
 	return (
-		<Paper variant="outlined" sx={{ display: 'flex', flexDirection: 'column' }}>
+		<Paper
+			variant="outlined"
+			sx={{
+				display: 'flex',
+				flexDirection: 'column',
+				bgcolor: bgColor,
+				marginTop: '1rem'
+			}}
+		>
 			<TextField
 				label="Workout session name"
 				placeholder="(Optional) Enter a custom workout session name"
@@ -101,14 +112,14 @@ const WorkoutSessionForm: FC<WorkoutSessionFormProps> = ({
 				sx={{ marginBottom: '0.2rem' }}
 			/>
 			{renderExercises()}
-			<IconButton onClick={addExercise}>
+			<IconButton onClick={addExercise} sx={{ marginTop: '0.5rem' }}>
 				<AddCircleOutlineIcon />
-				<Typography>Add exercise</Typography>
+				<Typography sx={{ marginLeft: '0.3rem' }}>Add exercise</Typography>
 			</IconButton>
-			<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+			<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
 				<IconButton onClick={removeWorkoutSession}>
 					<Delete />
-					<Typography>Delete workout</Typography>
+					<Typography>Delete workout session</Typography>
 				</IconButton>
 			</Box>
 		</Paper>

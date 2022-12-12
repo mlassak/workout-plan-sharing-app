@@ -1,5 +1,8 @@
 import { createTheme } from '@mui/material';
 
+export const SESSION_COLOR_A = '#253A59';
+export const SESSION_COLOR_B = '#224159';
+
 const theme = createTheme({
 	palette: {
 		mode: 'dark',

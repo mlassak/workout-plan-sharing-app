@@ -176,10 +176,6 @@ const BrowsePlans: FC = () => {
 		return custom_qc;
 	};
 
-	if (isLoading) {
-		return <Typography>Loading plans...</Typography>;
-	}
-
 	return (
 		<>
 			<Paper
@@ -193,17 +189,17 @@ const BrowsePlans: FC = () => {
 				}}
 			>
 				<Typography variant="h4" component="h2" textAlign="center" mb={3}>
-					Search wotkout plan based on your preferences
+					Search for workout plans based on your preferences
 				</Typography>
 				<TextField
 					label="Author"
-					placeholder="Enter the name of workout plans author"
+					placeholder="Enter the name of the workout plan's author"
 					{...setAuthor}
 					type="author"
 				/>
 				<TextField
-					label="workoutsPerWeek"
-					placeholder="Per week Workouts"
+					label="Workouts per week"
+					placeholder="Number of workouts per week"
 					{...setWorkoutsPerWeek}
 					type="workoutsPerWeek"
 				/>
@@ -232,10 +228,12 @@ const BrowsePlans: FC = () => {
 			<Grid container spacing={2}>
 				{planCards}
 			</Grid>
-			{!isLoading && (
+			{!isLoading ? (
 				<Button variant="outlined" onClick={fetchMorePlans} disabled={isEmpty}>
 					Get more
 				</Button>
+			) : (
+				<Typography>Loading plans...</Typography>
 			)}
 			{isEmpty && (
 				<Typography>

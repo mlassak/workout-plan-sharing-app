@@ -18,22 +18,24 @@ const SessionCard: FC<Exercise> = ({ name, reps, sets }) => (
 		<CardContent>
 			<Typography>Excercise: {name}</Typography>
 			<Typography>
-				Reps:{' '}
-				{reps.usesRange && (
+				Number of sets:{' '}
+				{sets.usesRange ? (
 					<>
-						{reps.values.min}-{reps.values.max} Repeats
+						{sets.values.min}-{sets.values.max}
 					</>
+				) : (
+					<> {sets.values.min}</>
 				)}
-				{!reps.usesRange && <> {reps.values.min} Repeats</>}
 			</Typography>
 			<Typography>
-				Sets:{' '}
-				{sets.usesRange && (
+				Number of repetitions:{' '}
+				{reps.usesRange ? (
 					<>
-						{sets.values.min}-{sets.values.max} Repeats
+						{reps.values.min}-{reps.values.max}
 					</>
+				) : (
+					<> {reps.values.min}</>
 				)}
-				{!sets.usesRange && <> {sets.values.min} Repeats</>}
 			</Typography>
 		</CardContent>
 	</Card>

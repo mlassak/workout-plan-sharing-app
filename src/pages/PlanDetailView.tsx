@@ -9,7 +9,7 @@ import WorkoutPlanDetailCard from '../components/workout-plans/workout-detail/Wo
 // import useLoggedInUser from '../hooks/useLoggedInUser';
 
 const Home = () => {
-	usePageTitle('Plan Detail View');
+	usePageTitle('Plan view');
 	// const user = useLoggedInUser();
 
 	const params = useParams();
